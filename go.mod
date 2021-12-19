@@ -1,4 +1,4 @@
-module github.com/ferreiravinicius/gset
+module github.com/ferreiravinicius/goset
 
 go 1.17
 

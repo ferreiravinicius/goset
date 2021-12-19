@@ -1,31 +1,37 @@
-package gset_test
+package goset_test
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/ferreiravinicius/gset"
+	"github.com/ferreiravinicius/goset"
 	"github.com/stretchr/testify/assert"
 )
 
-func testAdd(t *testing.T, s gset.Set) {
-	assert.True(t, s.Add("t"))
-	assert.Len(t, s, 1)
-	assert.Contains(t, s, "t")
-	assert.False(t, s.Add("t"))
+func testAdd(t *testing.T, set goset.Set) {
+	assert.True(t, set.Add(1))
+	assert.Len(t, set, 1)
+	assert.Contains(t, set, 1)
+	assert.False(t, set.Add(1))
 }
 
-func testString(t *testing.T, set gset.Set) {
-	if stringer, ok := set.(fmt.Stringer); ok {
-		assert.Equal(t, "Set{}", fmt.Sprint(stringer.String()))
-		set.Add(1)
-		assert.Equal(t, "Set{1}", fmt.Sprint(stringer.String()))
-		set.Add(2)
-		assert.Equal(t, "Set{1 2}", fmt.Sprint(stringer.String()))
-	}
+func testAddCantDuplicate(t *testing.T, set goset.Set) {
+	set.Add(999)
+	inserted := set.Add(999)
+	assert.False(t, inserted)
+	assert.Len(t, set, 1)
 }
 
-func testCollect(t *testing.T, set gset.Set) {
+func testString(t *testing.T, set goset.Set) {
+	stringer := set.(fmt.Stringer)
+	assert.Equal(t, "Set{}", fmt.Sprint(stringer.String()))
+	set.Add(1)
+	assert.Equal(t, "Set{1}", fmt.Sprint(stringer.String()))
+	set.Add(2)
+	assert.Equal(t, "Set{1 2}", fmt.Sprint(stringer.String()))
+}
+
+func testCollect(t *testing.T, set goset.Set) {
 	assert.Len(t, set, 0)
 	set.Add(1)
 	set.Add(2)

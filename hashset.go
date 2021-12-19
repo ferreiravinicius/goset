@@ -1,4 +1,4 @@
-package gset
+package goset
 
 import (
 	"fmt"
