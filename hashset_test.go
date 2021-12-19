@@ -27,3 +27,7 @@ func TestString(t *testing.T) {
 func TestCollect(t *testing.T) {
 	testCollect(t, goset.HashSet())
 }
+
+func TestContains(t *testing.T) {
+	testContains(t, goset.HashSet())
+}

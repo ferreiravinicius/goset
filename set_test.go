@@ -40,3 +40,12 @@ func testCollect(t *testing.T, set goset.Set) {
 	assert.Len(t, collected, 3)
 	assert.Contains(t, collected, 1)
 }
+
+func testContains(t *testing.T, set goset.Set) {
+	set.Add(1)
+	assert.True(t, set.Contains(1))
+	assert.False(t, set.Contains(2))
+}
+
+
+

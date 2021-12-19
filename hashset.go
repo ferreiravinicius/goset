@@ -51,3 +51,8 @@ func (s hashset) Collect() []interface{} {
 	}
 	return result
 }
+
+func (s hashset) Contains(item interface{}) bool {
+	_, exists := s[item]
+	return exists
+}

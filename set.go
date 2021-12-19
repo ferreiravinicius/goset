@@ -10,4 +10,7 @@ type Set interface {
 
 	// Creates a slice containing all items.
 	Collect() []interface{}
+
+	// Check if item already exists in this set
+	Contains(item interface{}) bool
 }
