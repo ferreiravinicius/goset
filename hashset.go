@@ -63,3 +63,12 @@ func (s hashset) Remove(item interface{}) bool {
 	afterSize := len(s)
 	return beforeSize > afterSize
 }
+
+func (s hashset) ContainsAll(items ...interface{}) bool {
+	for _, item := range items {
+		if _, exists := s[item]; !exists {
+			return false
+		}
+	}
+	return true
+}

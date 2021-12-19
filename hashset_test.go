@@ -35,3 +35,7 @@ func TestContains(t *testing.T) {
 func TestRemove(t *testing.T) {
 	testRemove(t, goset.HashSet())
 }
+
+func TestContainsAll(t *testing.T) {
+	testContainsAll(t, goset.HashSet())
+}

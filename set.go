@@ -10,10 +10,13 @@ type Set interface {
 	// Creates a slice containing all items.
 	Collect() []interface{}
 
-	// Returns true if provided item already exists in this set.
+	// Returns true if provided item exists in this set.
 	Contains(item interface{}) bool
 
 	// Removes the provided item from this set if it exists.
 	// Returns true if removed and false otherwise.
 	Remove(item interface{}) bool
+
+	// Returns true if all provided items exists in this set.
+	ContainsAll(items ...interface{}) bool
 }
