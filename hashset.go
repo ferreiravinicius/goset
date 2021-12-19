@@ -56,3 +56,10 @@ func (s hashset) Contains(item interface{}) bool {
 	_, exists := s[item]
 	return exists
 }
+
+func (s hashset) Remove(item interface{}) bool {
+	beforeSize := len(s)
+	delete(s, item)
+	afterSize := len(s)
+	return beforeSize > afterSize
+}

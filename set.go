@@ -1,7 +1,6 @@
 package goset
 
 // A collection that contains no duplicate elements.
-// Offers constant time performance for the basic operations.
 type Set interface {
 
 	// Adds the item to this set if it is not already present.
@@ -11,6 +10,10 @@ type Set interface {
 	// Creates a slice containing all items.
 	Collect() []interface{}
 
-	// Check if item already exists in this set
+	// Returns true if provided item already exists in this set.
 	Contains(item interface{}) bool
+
+	// Removes the provided item from this set if it exists.
+	// Returns true if removed and false otherwise.
+	Remove(item interface{}) bool
 }

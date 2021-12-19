@@ -47,5 +47,9 @@ func testContains(t *testing.T, set goset.Set) {
 	assert.False(t, set.Contains(2))
 }
 
-
-
+func testRemove(t *testing.T, set goset.Set) {
+	set.Add(1)
+	assert.False(t, set.Remove(999))
+	assert.True(t, set.Remove(1))
+	assert.Len(t, set, 0)
+}
