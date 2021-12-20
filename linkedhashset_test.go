@@ -78,3 +78,7 @@ func TestLinkedHashSetRemove(t *testing.T) {
 func TestLinkedHashSetContainsAll(t *testing.T) {
 	testSetContainsAll(t, LinkedHashSet())
 }
+
+func TestLinkedHashSetLen(t *testing.T) {
+	testSetLen(t, HashSet())
+}
