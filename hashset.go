@@ -7,9 +7,9 @@ import (
 
 type hashSet map[interface{}]struct{}
 
-// Implemention of set backed by a hash table (go builtin map).
+// Implemention of set backed by a HashTable (Go builtin Map).
 // Offers constant time performance for the basic operations.
-// This implementation is not syncronized.
+// This implementation is not synchronized.
 func HashSet(items ...interface{}) hashSet {
 	s := make(hashSet)
 	for _, item := range items {
