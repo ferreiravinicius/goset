@@ -19,4 +19,7 @@ type Set interface {
 
 	// Returns true if all provided items exists in this set.
 	ContainsAll(items ...interface{}) bool
+
+	// Returns the length of this set.
+	Len() int
 }

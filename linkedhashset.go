@@ -6,20 +6,21 @@ type node struct {
 	prev *node
 }
 
-type linkedhashset struct {
-	hashMap map[interface{}]struct{}
-	head    *node
-	tail    *node
+type linkedHashSet struct {
+	hashSet
+	head *node
+	tail *node
 }
 
-func LinkedHashSet() linkedhashset {
-	return linkedhashset{
-		hashMap: make(map[interface{}]struct{}),
+func LinkedHashSet() *linkedHashSet {
+	return &linkedHashSet{
+		hashSet: make(hashSet),
 	}
 }
 
-func (st *linkedhashset) Add(item interface{}) bool {
-	if _, exists := st.hashMap[item]; exists {
+func (st *linkedHashSet) Add(item interface{}) bool {
+
+	if wasAdded := st.hashSet.Add(item); !wasAdded {
 		return false
 	}
 
@@ -34,6 +35,5 @@ func (st *linkedhashset) Add(item interface{}) bool {
 		st.head = currNode
 	}
 
-	st.hashMap[item] = struct{}{}
 	return true
 }

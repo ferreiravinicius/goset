@@ -5,20 +5,20 @@ import (
 	"strings"
 )
 
-type hashset map[interface{}]struct{}
+type hashSet map[interface{}]struct{}
 
 // Implemention of set backed by a hash table (go builtin map).
 // Offers constant time performance for the basic operations.
 // This implementation is not syncronized.
-func HashSet(items ...interface{}) Set {
-	s := make(hashset)
+func HashSet(items ...interface{}) hashSet {
+	s := make(hashSet)
 	for _, item := range items {
 		s[item] = struct{}{}
 	}
 	return s
 }
 
-func (s hashset) Add(item interface{}) bool {
+func (s hashSet) Add(item interface{}) bool {
 	if _, exists := s[item]; exists {
 		return false
 	}
@@ -26,7 +26,7 @@ func (s hashset) Add(item interface{}) bool {
 	return true
 }
 
-func (s hashset) String() string {
+func (s hashSet) String() string {
 	var sb strings.Builder
 	fmt.Fprint(&sb, "Set{")
 	first := true
@@ -42,7 +42,7 @@ func (s hashset) String() string {
 	return sb.String()
 }
 
-func (s hashset) Collect() []interface{} {
+func (s hashSet) Collect() []interface{} {
 	result := make([]interface{}, len(s))
 	index := 0
 	for item := range s {
@@ -52,23 +52,27 @@ func (s hashset) Collect() []interface{} {
 	return result
 }
 
-func (s hashset) Contains(item interface{}) bool {
+func (s hashSet) Contains(item interface{}) bool {
 	_, exists := s[item]
 	return exists
 }
 
-func (s hashset) Remove(item interface{}) bool {
+func (s hashSet) Remove(item interface{}) bool {
 	beforeSize := len(s)
 	delete(s, item)
 	afterSize := len(s)
 	return beforeSize > afterSize
 }
 
-func (s hashset) ContainsAll(items ...interface{}) bool {
+func (s hashSet) ContainsAll(items ...interface{}) bool {
 	for _, item := range items {
 		if _, exists := s[item]; !exists {
 			return false
 		}
 	}
 	return true
+}
+
+func (s hashSet) Len() int {
+	return len(s)
 }
