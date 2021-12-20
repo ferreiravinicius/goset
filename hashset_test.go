@@ -12,33 +12,8 @@ func TestHashSet(t *testing.T) {
 	assert.Len(t, HashSet(1, 2, 3), 3)
 }
 
-func TestHashSetAdd(t *testing.T) {
-	testSetAdd(t, HashSet())
-}
-
-func TestHashSetAddCantDuplicate(t *testing.T) {
-	testSetAddCantDuplicate(t, HashSet())
-}
-func TestHashSetString(t *testing.T) {
-	testSetString(t, HashSet())
-}
-
-func TestHashSetCollect(t *testing.T) {
-	testSetCollect(t, HashSet())
-}
-
-func TestHashSetContains(t *testing.T) {
-	testSetContains(t, HashSet())
-}
-
-func TestHashSetRemove(t *testing.T) {
-	testSetRemove(t, HashSet())
-}
-
-func TestHashSetContainsAll(t *testing.T) {
-	testSetContainsAll(t, HashSet())
-}
-
-func TestHashSetLen(t *testing.T) {
-	testSetLen(t, HashSet())
+func TestHashSet_Set(t *testing.T) {
+	testSet(t, func() Set {
+		return HashSet()
+	})
 }

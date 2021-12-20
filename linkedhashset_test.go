@@ -6,6 +6,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestLinkedHashSetRemove(t *testing.T) {
+	//TODO:
+}
+
 func TestAddOneItem(t *testing.T) {
 	set := LinkedHashSet()
 	set.Add(1)
@@ -16,7 +20,7 @@ func TestAddOneItem(t *testing.T) {
 	assert.Equal(t, 1, set.tail.item)
 }
 
-func TestAddTwoItems(t *testing.T) {
+func TestLinkedHashSetAddTwoItems(t *testing.T) {
 	set := LinkedHashSet()
 	set.Add(1)
 	set.Add(2)
@@ -26,7 +30,7 @@ func TestAddTwoItems(t *testing.T) {
 	assert.Equal(t, 2, set.head.item)
 }
 
-func TestAddMultipleItems(t *testing.T) {
+func TestLinkedHashSetAddMultipleItems(t *testing.T) {
 	set := LinkedHashSet()
 	set.Add(1)
 	set.Add(2)
@@ -44,10 +48,6 @@ func TestAddMultipleItems(t *testing.T) {
 	}
 }
 
-func TestLinkedHashSetAdd(t *testing.T) {
-	testSetAdd(t, LinkedHashSet())
-}
-
 func TestLinkedHashSetAddCantDuplicate(t *testing.T) {
 	set := LinkedHashSet()
 	set.Add(1)
@@ -56,29 +56,10 @@ func TestLinkedHashSetAddCantDuplicate(t *testing.T) {
 	assert.Len(t, set.hashSet, 2)
 	assert.Equal(t, 1, set.tail.item)
 	assert.Equal(t, 2, set.head.item)
-
-	testSetAddCantDuplicate(t, LinkedHashSet())
-}
-func TestLinkedHashSetString(t *testing.T) {
-	testSetString(t, LinkedHashSet())
 }
 
-func TestLinkedHashSetCollect(t *testing.T) {
-	testSetCollect(t, LinkedHashSet())
-}
-
-func TestLinkedHashSetContains(t *testing.T) {
-	testSetContains(t, LinkedHashSet())
-}
-
-func TestLinkedHashSetRemove(t *testing.T) {
-	testSetRemove(t, LinkedHashSet())
-}
-
-func TestLinkedHashSetContainsAll(t *testing.T) {
-	testSetContainsAll(t, LinkedHashSet())
-}
-
-func TestLinkedHashSetLen(t *testing.T) {
-	testSetLen(t, HashSet())
+func TestLinkedHashSet_Set(t *testing.T) {
+	testSet(t, func() Set {
+		return LinkedHashSet()
+	})
 }

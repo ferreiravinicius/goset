@@ -76,3 +76,15 @@ func testSetLen(t *testing.T, set Set) {
 	set.Add(2)
 	assert.Equal(t, 2, set.Len())
 }
+
+// to ensure other implementations tests for the set interface
+func testSet(t *testing.T, makeInstance func() Set) {
+	testSetAdd(t, makeInstance())
+	testSetLen(t, makeInstance())
+	testSetString(t, makeInstance())
+	testSetRemove(t, makeInstance())
+	testSetContains(t, makeInstance())
+	testSetCollect(t, makeInstance())
+	testSetContainsAll(t, makeInstance())
+	testSetAddCantDuplicate(t, makeInstance())
+}
