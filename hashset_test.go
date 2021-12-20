@@ -13,32 +13,32 @@ func TestHashSet(t *testing.T) {
 }
 
 func TestHashSetAdd(t *testing.T) {
-	testAdd(t, HashSet())
+	testSetAdd(t, HashSet())
 }
 
 func TestHashSetAddCantDuplicate(t *testing.T) {
-	testAddCantDuplicate(t, HashSet())
+	testSetAddCantDuplicate(t, HashSet())
 }
 func TestHashSetString(t *testing.T) {
-	testString(t, HashSet())
+	testSetString(t, HashSet())
 }
 
 func TestHashSetCollect(t *testing.T) {
-	testCollect(t, HashSet())
+	testSetCollect(t, HashSet())
 }
 
 func TestHashSetContains(t *testing.T) {
-	testContains(t, HashSet())
+	testSetContains(t, HashSet())
 }
 
 func TestHashSetRemove(t *testing.T) {
-	testRemove(t, HashSet())
+	testSetRemove(t, HashSet())
 }
 
 func TestHashSetContainsAll(t *testing.T) {
-	testContainsAll(t, HashSet())
+	testSetContainsAll(t, HashSet())
 }
 
 func TestHashSetLen(t *testing.T) {
-	testLen(t, HashSet())
+	testSetLen(t, HashSet())
 }

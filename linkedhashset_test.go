@@ -45,7 +45,7 @@ func TestAddMultipleItems(t *testing.T) {
 }
 
 func TestLinkedHashSetAdd(t *testing.T) {
-	testAdd(t, LinkedHashSet())
+	testSetAdd(t, LinkedHashSet())
 }
 
 func TestLinkedHashSetAddCantDuplicate(t *testing.T) {
@@ -57,24 +57,24 @@ func TestLinkedHashSetAddCantDuplicate(t *testing.T) {
 	assert.Equal(t, 1, set.tail.item)
 	assert.Equal(t, 2, set.head.item)
 
-	testAddCantDuplicate(t, LinkedHashSet())
+	testSetAddCantDuplicate(t, LinkedHashSet())
 }
 func TestLinkedHashSetString(t *testing.T) {
-	testString(t, LinkedHashSet())
+	testSetString(t, LinkedHashSet())
 }
 
 func TestLinkedHashSetCollect(t *testing.T) {
-	testCollect(t, LinkedHashSet())
+	testSetCollect(t, LinkedHashSet())
 }
 
 func TestLinkedHashSetContains(t *testing.T) {
-	testContains(t, LinkedHashSet())
+	testSetContains(t, LinkedHashSet())
 }
 
 func TestLinkedHashSetRemove(t *testing.T) {
-	testRemove(t, LinkedHashSet())
+	testSetRemove(t, LinkedHashSet())
 }
 
 func TestLinkedHashSetContainsAll(t *testing.T) {
-	testContainsAll(t, LinkedHashSet())
+	testSetContainsAll(t, LinkedHashSet())
 }
