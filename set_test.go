@@ -1,28 +1,27 @@
-package goset_test
+package goset
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/ferreiravinicius/goset"
 	"github.com/stretchr/testify/assert"
 )
 
-func testAdd(t *testing.T, set goset.Set) {
+func testAdd(t *testing.T, set Set) {
 	assert.True(t, set.Add(1))
 	assert.Len(t, set, 1)
 	assert.Contains(t, set, 1)
 	assert.False(t, set.Add(1))
 }
 
-func testAddCantDuplicate(t *testing.T, set goset.Set) {
+func testAddCantDuplicate(t *testing.T, set Set) {
 	set.Add(999)
 	inserted := set.Add(999)
 	assert.False(t, inserted)
 	assert.Len(t, set, 1)
 }
 
-func testString(t *testing.T, set goset.Set) {
+func testString(t *testing.T, set Set) {
 	stringer := set.(fmt.Stringer)
 	assert.Equal(t, "Set{}", fmt.Sprint(stringer.String()))
 	set.Add(1)
@@ -36,7 +35,7 @@ func testString(t *testing.T, set goset.Set) {
 	assert.Contains(t, r, "2")
 }
 
-func testCollect(t *testing.T, set goset.Set) {
+func testCollect(t *testing.T, set Set) {
 	assert.Len(t, set, 0)
 	set.Add(1)
 	set.Add(2)
@@ -46,20 +45,20 @@ func testCollect(t *testing.T, set goset.Set) {
 	assert.Contains(t, collected, 1)
 }
 
-func testContains(t *testing.T, set goset.Set) {
+func testContains(t *testing.T, set Set) {
 	set.Add(1)
 	assert.True(t, set.Contains(1))
 	assert.False(t, set.Contains(2))
 }
 
-func testRemove(t *testing.T, set goset.Set) {
+func testRemove(t *testing.T, set Set) {
 	set.Add(1)
 	assert.False(t, set.Remove(999))
 	assert.True(t, set.Remove(1))
 	assert.Len(t, set, 0)
 }
 
-func testContainsAll(t *testing.T, set goset.Set) {
+func testContainsAll(t *testing.T, set Set) {
 	set.Add(1)
 	set.Add(2)
 	set.Add(3)

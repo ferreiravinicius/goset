@@ -1,41 +1,40 @@
-package goset_test
+package goset
 
 import (
 	"testing"
 
-	"github.com/ferreiravinicius/goset"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestHashSet(t *testing.T) {
-	assert.Empty(t, goset.HashSet())
-	assert.Contains(t, goset.HashSet(1), 1)
-	assert.Len(t, goset.HashSet(1, 2, 3), 3)
+	assert.Empty(t, HashSet())
+	assert.Contains(t, HashSet(1), 1)
+	assert.Len(t, HashSet(1, 2, 3), 3)
 }
 
 func TestAdd(t *testing.T) {
-	testAdd(t, goset.HashSet())
+	testAdd(t, HashSet())
 }
 
 func TestAddCantDuplicate(t *testing.T) {
-	testAddCantDuplicate(t, goset.HashSet())
+	testAddCantDuplicate(t, HashSet())
 }
 func TestString(t *testing.T) {
-	testString(t, goset.HashSet())
+	testString(t, HashSet())
 }
 
 func TestCollect(t *testing.T) {
-	testCollect(t, goset.HashSet())
+	testCollect(t, HashSet())
 }
 
 func TestContains(t *testing.T) {
-	testContains(t, goset.HashSet())
+	testContains(t, HashSet())
 }
 
 func TestRemove(t *testing.T) {
-	testRemove(t, goset.HashSet())
+	testRemove(t, HashSet())
 }
 
 func TestContainsAll(t *testing.T) {
-	testContainsAll(t, goset.HashSet())
+	testContainsAll(t, HashSet())
 }
