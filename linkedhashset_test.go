@@ -12,10 +12,8 @@ func TestLinkedHashSetRemove(t *testing.T) {
 	set.Add(2)
 	set.Remove(2)
 	assert.Equal(t, 1, set.Len())
-	// TODO: implement linked list stuff for this
-	// assert.Equal(t, 1, set.head.item)
-	// assert.Equal(t, 1, set.tail.item)
-
+	assert.Equal(t, 1, set.head.item)
+	assert.Equal(t, 1, set.tail.item)
 }
 
 func TestAddOneItem(t *testing.T) {

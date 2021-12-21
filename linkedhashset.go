@@ -71,6 +71,26 @@ func (st *linkedHashSet) Remove(item interface{}) bool {
 		return false
 	}
 
+	for curr := st.head; curr != nil; curr = curr.next {
+		if curr.item == item {
+
+			// nil - [curr] - nil
+
+			if prev := curr.prev; prev == nil {
+				st.head = curr.next
+				st.head.prev = nil
+				prev.next = curr.next
+			}
+
+			if next := curr.next; next != nil {
+				next.prev = curr.prev
+			}
+
+			//
+
+		}
+	}
+
 	return true
 
 }
