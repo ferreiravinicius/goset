@@ -6,15 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// type List interface {
-// 	Add(item interface{}) bool
-// 	AddAll(items ...interface{}) bool
-// 	Len() int
-// 	Get(index int) interface{}
-// 	RemoveAt(index int) bool
-// 	Remove(item interface{}) bool
-// }
-
 type Node struct {
 	Value interface{}
 	prev  *Node
@@ -49,7 +40,7 @@ func (list *LinkedList) AddEnd(item interface{}) bool {
 	return true
 }
 
-func TestAddOne(t *testing.T) {
+func TestLinkedListAddEndOne(t *testing.T) {
 	list := new(LinkedList)
 	assert.True(t, list.AddEnd(1))
 	assert.NotNil(t, list.head)
@@ -57,7 +48,7 @@ func TestAddOne(t *testing.T) {
 	assert.Equal(t, 1, list.size)
 }
 
-func TestAddEndMoreThanOne(t *testing.T) {
+func TestLinkedListAddEndMoreThanOne(t *testing.T) {
 	list := new(LinkedList)
 	assert.True(t, list.AddEnd(1))
 	assert.True(t, list.AddEnd(2))
@@ -75,7 +66,7 @@ func (list LinkedList) End() *Node {
 	return list.tail
 }
 
-func TestEnd(t *testing.T) {
+func TestLinkedListEnd(t *testing.T) {
 	l := new(LinkedList)
 	assert.Nil(t, l.End())
 	l.AddEnd(1)
@@ -84,7 +75,7 @@ func TestEnd(t *testing.T) {
 	assert.Equal(t, 2, l.End().Value)
 }
 
-func TestCanIterateOverItems(t *testing.T) {
+func TestLinkedListIterateOverItems(t *testing.T) {
 	list := new(LinkedList)
 	list.AddEnd(1)
 	list.AddEnd(2)
@@ -106,6 +97,8 @@ func TestLinkedListLen(t *testing.T) {
 	assert.Equal(t, 0, l.Len())
 	l.AddEnd(1)
 	assert.Equal(t, 1, l.Len())
+	l.AddBegin(2)
+	assert.Equal(t, 2, l.Len())
 }
 
 func (list *LinkedList) AddBegin(item interface{}) *Node {
@@ -118,6 +111,7 @@ func (list *LinkedList) AddBegin(item interface{}) *Node {
 		list.head.prev = freshNode
 		list.head = freshNode
 	}
+	list.size++
 	return freshNode
 }
 
@@ -130,4 +124,72 @@ func TestLinkedListAddBegin(t *testing.T) {
 	assert.Equal(t, 1, l.tail.Value)
 	assert.Equal(t, 2, l.tail.prev.Value)
 	assert.Equal(t, 2, l.head.next.Value)
+	assert.Equal(t, 3, l.Len())
+}
+
+func (it *LinkedList) RemoveEnd() *Node {
+	return it.Remove(it.tail)
+}
+
+func TestLinkedListRemoveEnd(t *testing.T) {
+	l := new(LinkedList)
+	assert.Nil(t, l.RemoveEnd())
+	assert.Equal(t, 0, l.size)
+	l.AddEnd(1)
+	removed := l.RemoveEnd()
+	assert.NotNil(t, removed)
+	assert.Equal(t, 1, removed.Value)
+	assert.Nil(t, removed.next)
+	assert.Nil(t, removed.prev)
+
+	l.AddEnd(1)
+	l.AddEnd(2)
+	l.RemoveEnd()
+	assert.Equal(t, 1, l.size)
+
+	l.AddBegin(9)
+	assert.Equal(t, 1, l.RemoveEnd().Value)
+}
+
+func (list *LinkedList) Remove(node *Node) *Node {
+
+	if node == nil {
+		return nil
+	}
+
+	if node.prev != nil {
+		node.prev.next = node.next
+	} else {
+		list.head = node.next
+	}
+
+	if node.next != nil {
+		node.next.prev = node.prev
+	} else {
+		list.tail = node.prev
+	}
+
+	node.prev = nil // avoid mess
+	node.next = nil // avoid mess
+	list.size--
+	return node
+}
+
+func TestLinkedListRemove(t *testing.T) {
+	l := new(LinkedList)
+	assert.Nil(t, l.Remove(nil))
+
+	node := l.AddBegin(1)
+	assert.NotNil(t, l.Remove(node))
+	assert.Nil(t, l.head)
+	assert.Nil(t, l.tail)
+
+	l.AddBegin(3)
+	two := l.AddBegin(2)
+	l.AddBegin(1)
+	assert.NotNil(t, l.Remove(two))
+	assert.Equal(t, 1, l.head.Value)
+	assert.Equal(t, 3, l.tail.Value)
+	assert.Equal(t, 1, l.tail.prev.Value)
+	assert.Equal(t, 3, l.head.next.Value)
 }
