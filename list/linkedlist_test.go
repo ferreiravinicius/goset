@@ -107,3 +107,27 @@ func TestLinkedListLen(t *testing.T) {
 	l.AddEnd(1)
 	assert.Equal(t, 1, l.Len())
 }
+
+func (list *LinkedList) AddBegin(item interface{}) *Node {
+	freshNode := &Node{Value: item}
+	if list.head == nil {
+		list.head = freshNode
+		list.tail = freshNode
+	} else {
+		freshNode.next = list.head
+		list.head.prev = freshNode
+		list.head = freshNode
+	}
+	return freshNode
+}
+
+func TestLinkedListAddBegin(t *testing.T) {
+	l := new(LinkedList)
+	assert.NotNil(t, l.AddBegin(1))
+	assert.Equal(t, l.head, l.AddBegin(2))
+	assert.Equal(t, l.head, l.AddBegin(3))
+	assert.Equal(t, 3, l.head.Value)
+	assert.Equal(t, 1, l.tail.Value)
+	assert.Equal(t, 2, l.tail.prev.Value)
+	assert.Equal(t, 2, l.head.next.Value)
+}
