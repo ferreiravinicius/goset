@@ -28,6 +28,10 @@ func (list LinkedList) End() *Node {
 	return list.tail
 }
 
+func (list LinkedList) Len() int {
+	return list.size
+}
+
 func (list *LinkedList) AddEnd(item interface{}) *Node {
 	freshNode := &Node{Value: item}
 	if list.head == nil {
@@ -37,6 +41,20 @@ func (list *LinkedList) AddEnd(item interface{}) *Node {
 		freshNode.prev = list.tail
 		list.tail.next = freshNode
 		list.tail = freshNode
+	}
+	list.size++
+	return freshNode
+}
+
+func (list *LinkedList) AddBegin(item interface{}) *Node {
+	freshNode := &Node{Value: item}
+	if list.head == nil {
+		list.head = freshNode
+		list.tail = freshNode
+	} else {
+		freshNode.next = list.head
+		list.head.prev = freshNode
+		list.head = freshNode
 	}
 	list.size++
 	return freshNode
@@ -68,4 +86,19 @@ func (list *LinkedList) Remove(node *Node) *Node {
 	node.next = nil // avoid mess
 	list.size--
 	return node
+}
+
+// O(n)
+func (list LinkedList) FirstMatch(item interface{}) *Node {
+	for n := list.head; n != nil; n = n.next {
+		if n.Value == item {
+			return n
+		}
+	}
+	return nil
+}
+
+// O(n)
+func (list LinkedList) Contains(item interface{}) bool {
+	return list.FirstMatch(item) != nil
 }

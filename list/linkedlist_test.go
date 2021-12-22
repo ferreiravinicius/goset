@@ -54,10 +54,6 @@ func TestLinkedListIterateOverItems(t *testing.T) {
 	assert.ElementsMatch(t, r, []int{1, 2, 3})
 }
 
-func (list LinkedList) Len() int {
-	return list.size
-}
-
 func TestLinkedListLen(t *testing.T) {
 	l := new(LinkedList)
 	assert.Equal(t, 0, l.Len())
@@ -65,20 +61,6 @@ func TestLinkedListLen(t *testing.T) {
 	assert.Equal(t, 1, l.Len())
 	l.AddBegin(2)
 	assert.Equal(t, 2, l.Len())
-}
-
-func (list *LinkedList) AddBegin(item interface{}) *Node {
-	freshNode := &Node{Value: item}
-	if list.head == nil {
-		list.head = freshNode
-		list.tail = freshNode
-	} else {
-		freshNode.next = list.head
-		list.head.prev = freshNode
-		list.head = freshNode
-	}
-	list.size++
-	return freshNode
 }
 
 func TestLinkedListAddBegin(t *testing.T) {
@@ -132,6 +114,21 @@ func TestLinkedListRemove(t *testing.T) {
 	assert.Equal(t, 3, l.head.next.Value)
 }
 
-func TestLinkedListAddAfter(t *testing.T) {
-	// l := new(LinkedList)
+func TestLinkedListFirstMatch(t *testing.T) {
+	l := new(LinkedList)
+	assert.Nil(t, l.FirstMatch(1))
+	one := l.AddBegin(1)
+	assert.Equal(t, one, l.FirstMatch(1))
+	two := l.AddEnd(2)
+	l.AddEnd(3)
+	assert.Equal(t, two, l.FirstMatch(2))
+}
+
+func TestLinkedListContains(t *testing.T) {
+	l := new(LinkedList)
+	assert.False(t, l.Contains(1))
+	l.AddEnd(2)
+	assert.False(t, l.Contains(1))
+	l.AddEnd(1)
+	assert.True(t, l.Contains(1))
 }
