@@ -6,12 +6,12 @@ type Node struct {
 	next  *Node
 }
 
-func (it Node) Next() *Node {
-	return it.next
+func (node Node) Next() *Node {
+	return node.next
 }
 
-func (it Node) Prev() *Node {
-	return it.prev
+func (node Node) Prev() *Node {
+	return node.prev
 }
 
 type LinkedList struct {
@@ -20,30 +20,30 @@ type LinkedList struct {
 	size int
 }
 
-func (it LinkedList) Begin() *Node {
-	return it.head
+func (list LinkedList) Begin() *Node {
+	return list.head
 }
 
-func (it LinkedList) End() *Node {
-	return it.tail
+func (list LinkedList) End() *Node {
+	return list.tail
 }
 
-func (it *LinkedList) AddEnd(item interface{}) *Node {
+func (list *LinkedList) AddEnd(item interface{}) *Node {
 	freshNode := &Node{Value: item}
-	if it.head == nil {
-		it.head = freshNode
-		it.tail = freshNode
+	if list.head == nil {
+		list.head = freshNode
+		list.tail = freshNode
 	} else {
-		freshNode.prev = it.tail
-		it.tail.next = freshNode
-		it.tail = freshNode
+		freshNode.prev = list.tail
+		list.tail.next = freshNode
+		list.tail = freshNode
 	}
-	it.size++
+	list.size++
 	return freshNode
 }
 
-func (it *LinkedList) RemoveEnd() *Node {
-	return it.Remove(it.tail)
+func (list *LinkedList) RemoveEnd() *Node {
+	return list.Remove(list.tail)
 }
 
 func (list *LinkedList) Remove(node *Node) *Node {
