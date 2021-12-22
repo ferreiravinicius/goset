@@ -1,6 +1,6 @@
 package list
 
-// Element represents
+// Element holds the value for each item inside the list.
 type Element struct {
 	Value interface{}
 	prev  *Element
