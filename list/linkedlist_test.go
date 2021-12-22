@@ -6,11 +6,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestLinkedListAddEndReturnNode(t *testing.T) {
+func TestLinkedListAddEndReturnElement(t *testing.T) {
 	l := new(LinkedList)
-	node := l.AddEnd(1)
-	assert.NotNil(t, node)
-	assert.Equal(t, 1, node.Value)
+	el := l.AddEnd(1)
+	assert.NotNil(t, el)
+	assert.Equal(t, 1, el.Value)
 }
 
 func TestLinkedListAddEndOne(t *testing.T) {
@@ -48,8 +48,20 @@ func TestLinkedListIterateOverItems(t *testing.T) {
 	list.AddEnd(3)
 
 	r := make([]int, 0, 3)
-	for n := list.Begin(); n != nil; n = n.Next() {
-		r = append(r, n.Value.(int))
+	for el := list.Begin(); el != nil; el = el.Next() {
+		r = append(r, el.Value.(int))
+	}
+	assert.ElementsMatch(t, r, []int{1, 2, 3})
+}
+func TestLinkedListIterateReverse(t *testing.T) {
+	list := new(LinkedList)
+	list.AddEnd(1)
+	list.AddEnd(2)
+	list.AddEnd(3)
+
+	r := make([]int, 0, 3)
+	for el := list.End(); el != nil; el = el.Prev() {
+		r = append(r, el.Value.(int))
 	}
 	assert.ElementsMatch(t, r, []int{1, 2, 3})
 }
@@ -99,8 +111,8 @@ func TestLinkedListRemove(t *testing.T) {
 	l := new(LinkedList)
 	assert.Nil(t, l.Remove(nil))
 
-	node := l.AddBegin(1)
-	assert.NotNil(t, l.Remove(node))
+	el := l.AddBegin(1)
+	assert.NotNil(t, l.Remove(el))
 	assert.Nil(t, l.head)
 	assert.Nil(t, l.tail)
 
@@ -131,4 +143,24 @@ func TestLinkedListContains(t *testing.T) {
 	assert.False(t, l.Contains(1))
 	l.AddEnd(1)
 	assert.True(t, l.Contains(1))
+}
+
+func TestLinkedListRemoveBegin(t *testing.T) {
+	l := new(LinkedList)
+	assert.Nil(t, l.RemoveBegin())
+
+	one := l.AddEnd(1)
+	l.AddEnd(2)
+	l.AddEnd(3)
+	assert.Equal(t, 1, l.head.Value)
+	assert.Equal(t, one, l.RemoveBegin())
+	assert.Equal(t, 2, l.head.Value)
+}
+
+func TestLinkedListAddAll(t *testing.T) {
+	l := new(LinkedList)
+	l.AddAll(1, 2, 3)
+	assert.Equal(t, 3, l.size)
+	assert.Equal(t, 1, l.head.Value)
+	assert.Equal(t, 3, l.tail.Value)
 }

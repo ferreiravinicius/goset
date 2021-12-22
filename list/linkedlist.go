@@ -1,104 +1,135 @@
 package list
 
-type Node struct {
+// Element represents
+type Element struct {
 	Value interface{}
-	prev  *Node
-	next  *Node
+	prev  *Element
+	next  *Element
 }
 
-func (node Node) Next() *Node {
-	return node.next
+// Get the next element or nil if it's the end of the list.
+func (el Element) Next() *Element {
+	return el.next
 }
 
-func (node Node) Prev() *Node {
-	return node.prev
+// Get the previous element or nil if it's the begin of the list.
+func (el Element) Prev() *Element {
+	return el.prev
 }
 
+// Doubly linked list.
+// Keeps order of insertion.
+// Not synchronized.
 type LinkedList struct {
-	head *Node
-	tail *Node
+	head *Element
+	tail *Element
 	size int
 }
 
-func (list LinkedList) Begin() *Node {
+// Get the first element in this list or nil if empty - O(1).
+func (list LinkedList) Begin() *Element {
 	return list.head
 }
 
-func (list LinkedList) End() *Node {
+// Get the last element in this list or nil if empty - O(1).
+func (list LinkedList) End() *Element {
 	return list.tail
 }
 
+// Returns the size of this list - O(1).
 func (list LinkedList) Len() int {
 	return list.size
 }
 
-func (list *LinkedList) AddEnd(item interface{}) *Node {
-	freshNode := &Node{Value: item}
+// Adds the provided value at the end of this list - O(1).
+// Returns the created element.
+func (list *LinkedList) AddEnd(value interface{}) *Element {
+	newElement := &Element{Value: value}
 	if list.head == nil {
-		list.head = freshNode
-		list.tail = freshNode
+		list.head = newElement
+		list.tail = newElement
 	} else {
-		freshNode.prev = list.tail
-		list.tail.next = freshNode
-		list.tail = freshNode
+		newElement.prev = list.tail
+		list.tail.next = newElement
+		list.tail = newElement
 	}
 	list.size++
-	return freshNode
+	return newElement
 }
 
-func (list *LinkedList) AddBegin(item interface{}) *Node {
-	freshNode := &Node{Value: item}
+// Adds the provided value at the begin of this list - O(1).
+// Returns the created element.
+func (list *LinkedList) AddBegin(value interface{}) *Element {
+	newElement := &Element{Value: value}
 	if list.head == nil {
-		list.head = freshNode
-		list.tail = freshNode
+		list.head = newElement
+		list.tail = newElement
 	} else {
-		freshNode.next = list.head
-		list.head.prev = freshNode
-		list.head = freshNode
+		newElement.next = list.head
+		list.head.prev = newElement
+		list.head = newElement
 	}
 	list.size++
-	return freshNode
+	return newElement
 }
 
-func (list *LinkedList) RemoveEnd() *Node {
+// Removes the last element from this list - O(1).
+// Returns the removed element or nil if list is empty.
+func (list *LinkedList) RemoveEnd() *Element {
 	return list.Remove(list.tail)
 }
 
-func (list *LinkedList) Remove(node *Node) *Node {
+// Removes the first element from this list - O(1).
+// Returns the removed element or nil if list is empty.
+func (list *LinkedList) RemoveBegin() *Element {
+	return list.Remove(list.head)
+}
 
-	if node == nil {
+// Removes provided element from this list - O(1).
+// Returns the removed element.
+func (list *LinkedList) Remove(element *Element) *Element {
+
+	if element == nil {
 		return nil
 	}
 
-	if node.prev != nil {
-		node.prev.next = node.next
+	if element.prev != nil {
+		element.prev.next = element.next
 	} else {
-		list.head = node.next
+		list.head = element.next
 	}
 
-	if node.next != nil {
-		node.next.prev = node.prev
+	if element.next != nil {
+		element.next.prev = element.prev
 	} else {
-		list.tail = node.prev
+		list.tail = element.prev
 	}
 
-	node.prev = nil // avoid mess
-	node.next = nil // avoid mess
+	element.prev = nil // avoid mess
+	element.next = nil // avoid mess
 	list.size--
-	return node
+	return element
 }
 
-// O(n)
-func (list LinkedList) FirstMatch(item interface{}) *Node {
+// Returns first element containing provided value
+// or nil if none is found - O(n)
+func (list LinkedList) FirstMatch(value interface{}) *Element {
 	for n := list.head; n != nil; n = n.next {
-		if n.Value == item {
+		if n.Value == value {
 			return n
 		}
 	}
 	return nil
 }
 
-// O(n)
-func (list LinkedList) Contains(item interface{}) bool {
-	return list.FirstMatch(item) != nil
+// Returns true if this list contains provided value - O(n).
+func (list LinkedList) Contains(value interface{}) bool {
+	return list.FirstMatch(value) != nil
+}
+
+// Adds multiple values at the end of this list - O(1).
+func (list *LinkedList) AddAll(values ...interface{}) {
+	for _, value := range values {
+		list.AddEnd(value)
+	}
 }
