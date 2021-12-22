@@ -164,3 +164,15 @@ func TestLinkedListAddAll(t *testing.T) {
 	assert.Equal(t, 1, l.head.Value)
 	assert.Equal(t, 3, l.tail.Value)
 }
+
+func TestLinkedListAddAfter(t *testing.T) {
+	l := new(LinkedList)
+	assert.Nil(t, l.AddAfter(l.Begin(), 1))
+	one := l.AddEnd(1)
+	assert.Equal(t, 2, l.AddAfter(one, 2).Value)
+	assert.Equal(t, 2, l.tail.Value)
+	nine := l.AddAfter(one, 9)
+	assert.Equal(t, nine, l.head.next)
+	assert.Equal(t, 2, l.tail.Value)
+	assert.Equal(t, 3, l.Len())
+}

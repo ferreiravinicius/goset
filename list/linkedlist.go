@@ -88,7 +88,6 @@ func (list *LinkedList) RemoveBegin() *Element {
 // Removes provided element from this list - O(1).
 // Returns the removed element.
 func (list *LinkedList) Remove(element *Element) *Element {
-
 	if element == nil {
 		return nil
 	}
@@ -132,4 +131,23 @@ func (list *LinkedList) AddAll(values ...interface{}) {
 	for _, value := range values {
 		list.AddEnd(value)
 	}
+}
+
+// Adds the provided value after other element in this list - O(1).
+// Returns the created element or nil if other element is also nil.
+func (list *LinkedList) AddAfter(otherElement *Element, value interface{}) *Element {
+	if otherElement == nil {
+		return nil
+	}
+	newElement := &Element{
+		Value: value,
+		prev:  otherElement,
+		next:  otherElement.next,
+	}
+	otherElement.next = newElement
+	if newElement.next == nil {
+		list.tail = newElement
+	}
+	list.size++
+	return newElement
 }
