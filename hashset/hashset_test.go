@@ -94,3 +94,14 @@ func TestHashSetLen(t *testing.T) {
 	set.Add(2)
 	assert.Equal(t, 2, set.Len())
 }
+
+func TestForEach(t *testing.T) {
+	set := From(1, 2, 3)
+	r := make([]int, 0, 3)
+
+	set.ForEach(func(item interface{}) {
+		r = append(r, item.(int))
+	})
+
+	assert.ElementsMatch(t, set.ToSlice(), r)
+}

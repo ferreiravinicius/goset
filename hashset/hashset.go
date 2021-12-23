@@ -109,3 +109,14 @@ func (s HashSet) ContainsAll(items ...interface{}) bool {
 func (s HashSet) Len() int {
 	return len(s.hashMap)
 }
+
+// Function to perform an operation on each item whe used with ForEach
+type Consumer func(item interface{})
+
+// Performs an action for each item inside this set.
+// Does not guarantee order.
+func (s HashSet) ForEach(consumer Consumer) {
+	for item := range s.hashMap {
+		consumer(item)
+	}
+}
