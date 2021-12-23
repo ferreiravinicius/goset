@@ -1,10 +1,15 @@
-package list
+package linkedlist
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
+
+func TestLinkedListNew(t *testing.T) {
+	l := New()
+	assert.NotNil(t, l)
+}
 
 func TestLinkedListAddEndReturnElement(t *testing.T) {
 	l := new(LinkedList)

@@ -1,4 +1,4 @@
-package list
+package linkedlist
 
 // Element holds the value for each item inside the list.
 type Element struct {
@@ -24,6 +24,11 @@ type LinkedList struct {
 	head *Element
 	tail *Element
 	size int
+}
+
+// Creates a new instance of LinkedList
+func New() *LinkedList {
+	return new(LinkedList)
 }
 
 // Get the first element in this list or nil if empty - O(1).
