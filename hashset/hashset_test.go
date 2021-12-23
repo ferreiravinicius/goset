@@ -15,7 +15,7 @@ func TestHashSetFrom(t *testing.T) {
 	assert.Contains(t, From(1).hashMap, 1)
 	assert.Len(t, From(1, 2, 3).hashMap, 3)
 	s := []interface{}{1, 2, 3}
-	assert.Len(t, FromSlice(s).hashMap, 3)
+	assert.Len(t, From(s...).hashMap, 3)
 }
 
 func TestHashSetAdd(t *testing.T) {
