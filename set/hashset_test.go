@@ -1,4 +1,4 @@
-package goset
+package set
 
 import (
 	"fmt"
@@ -7,35 +7,44 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func testSetAdd(t *testing.T, set Set) {
+func TestHashSet(t *testing.T) {
+	assert.Empty(t, HashSet().hashMap)
+	assert.Contains(t, HashSet(1).hashMap, 1)
+	assert.Len(t, HashSet(1, 2, 3).hashMap, 3)
+}
+
+func TestHashSetAdd(t *testing.T) {
+	set := HashSet()
 	assert.True(t, set.Add(1))
 	assert.Equal(t, 1, set.Len())
 	assert.True(t, set.Contains(1))
 	assert.False(t, set.Add(1))
 }
 
-func testSetAddCantDuplicate(t *testing.T, set Set) {
+func TestHashSetAddCantDuplicate(t *testing.T) {
+	set := HashSet()
 	set.Add(999)
 	inserted := set.Add(999)
 	assert.False(t, inserted)
 	assert.Equal(t, 1, set.Len())
 }
 
-func testSetString(t *testing.T, set Set) {
-	stringer := set.(fmt.Stringer)
-	assert.Equal(t, "Set{}", fmt.Sprint(stringer.String()))
+func TestHashSetString(t *testing.T) {
+	set := HashSet()
+	assert.Equal(t, "Set{}", fmt.Sprint(set.String()))
 	set.Add(1)
-	assert.Equal(t, "Set{1}", fmt.Sprint(stringer.String()))
+	assert.Equal(t, "Set{1}", fmt.Sprint(set.String()))
 	set.Add(2)
 
 	// builtin map doesn't guarantee order
 	// we can't predict the output with multiple items
-	r := stringer.String()
+	r := set.String()
 	assert.Contains(t, r, "1")
 	assert.Contains(t, r, "2")
 }
 
-func testSetCollect(t *testing.T, set Set) {
+func TestHashSetCollect(t *testing.T) {
+	set := HashSet()
 	assert.Equal(t, 0, set.Len())
 	set.Add(1)
 	set.Add(2)
@@ -45,20 +54,23 @@ func testSetCollect(t *testing.T, set Set) {
 	assert.Contains(t, collected, 1)
 }
 
-func testSetContains(t *testing.T, set Set) {
+func TestHashSetContains(t *testing.T) {
+	set := HashSet()
 	set.Add(1)
 	assert.True(t, set.Contains(1))
 	assert.False(t, set.Contains(2))
 }
 
-func testSetRemove(t *testing.T, set Set) {
+func TestHashSetRemove(t *testing.T) {
+	set := HashSet()
 	set.Add(1)
 	assert.False(t, set.Remove(999))
 	assert.True(t, set.Remove(1))
 	assert.Equal(t, 0, set.Len())
 }
 
-func testSetContainsAll(t *testing.T, set Set) {
+func TestHashSetContainsAll(t *testing.T) {
+	set := HashSet()
 	set.Add(1)
 	set.Add(2)
 	set.Add(3)
@@ -68,23 +80,12 @@ func testSetContainsAll(t *testing.T, set Set) {
 	assert.True(t, set.ContainsAll(1, 2))
 }
 
-func testSetLen(t *testing.T, set Set) {
+func TestHashSetLen(t *testing.T) {
+	set := HashSet()
 	set.Add(1)
 	assert.Equal(t, 1, set.Len())
 	set.Add(1)
 	assert.Equal(t, 1, set.Len())
 	set.Add(2)
 	assert.Equal(t, 2, set.Len())
-}
-
-// to ensure other implementations tests for the set interface
-func testSet(t *testing.T, makeInstance func() Set) {
-	testSetAdd(t, makeInstance())
-	testSetLen(t, makeInstance())
-	testSetString(t, makeInstance())
-	testSetRemove(t, makeInstance())
-	testSetContains(t, makeInstance())
-	testSetCollect(t, makeInstance())
-	testSetContainsAll(t, makeInstance())
-	testSetAddCantDuplicate(t, makeInstance())
 }
