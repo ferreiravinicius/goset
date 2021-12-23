@@ -1,27 +1,32 @@
-package set
+package hashset
 
 import (
 	"fmt"
 	"strings"
 )
 
-type hashSet struct {
-	// inside struct to prevend external modification
+type HashSet struct {
+	// inside struct to prevent external modification
 	hashMap map[interface{}]struct{}
 }
 
-// Implemention of set backed by a HashTable (Go builtin Map).
-// Offers constant time performance for the basic operations.
-// This implementation is not synchronized.
-func HashSet(items ...interface{}) *hashSet {
-	s := &hashSet{hashMap: make(map[interface{}]struct{})}
+func New() *HashSet {
+	return &HashSet{hashMap: make(map[interface{}]struct{})}
+}
+
+func FromSlice(slice []interface{}) *HashSet {
+	return From(slice...)
+}
+
+func From(items ...interface{}) *HashSet {
+	s := New()
 	for _, item := range items {
-		s.hashMap[item] = struct{}{}
+		s.Add(item)
 	}
 	return s
 }
 
-func (s hashSet) Add(item interface{}) bool {
+func (s HashSet) Add(item interface{}) bool {
 	if _, exists := s.hashMap[item]; exists {
 		return false
 	}
@@ -29,7 +34,7 @@ func (s hashSet) Add(item interface{}) bool {
 	return true
 }
 
-func (s hashSet) String() string {
+func (s HashSet) String() string {
 	var sb strings.Builder
 	fmt.Fprint(&sb, "Set{")
 	first := true
@@ -45,7 +50,7 @@ func (s hashSet) String() string {
 	return sb.String()
 }
 
-func (s hashSet) ToSlice() []interface{} {
+func (s HashSet) ToSlice() []interface{} {
 	result := make([]interface{}, len(s.hashMap))
 	index := 0
 	for item := range s.hashMap {
@@ -55,19 +60,19 @@ func (s hashSet) ToSlice() []interface{} {
 	return result
 }
 
-func (s hashSet) Contains(item interface{}) bool {
+func (s HashSet) Contains(item interface{}) bool {
 	_, exists := s.hashMap[item]
 	return exists
 }
 
-func (s hashSet) Remove(item interface{}) bool {
+func (s HashSet) Remove(item interface{}) bool {
 	beforeSize := len(s.hashMap)
 	delete(s.hashMap, item)
 	afterSize := len(s.hashMap)
 	return beforeSize > afterSize
 }
 
-func (s hashSet) ContainsAll(items ...interface{}) bool {
+func (s HashSet) ContainsAll(items ...interface{}) bool {
 	for _, item := range items {
 		if _, exists := s.hashMap[item]; !exists {
 			return false
@@ -76,6 +81,6 @@ func (s hashSet) ContainsAll(items ...interface{}) bool {
 	return true
 }
 
-func (s hashSet) Len() int {
+func (s HashSet) Len() int {
 	return len(s.hashMap)
 }

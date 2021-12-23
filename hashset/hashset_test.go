@@ -1,4 +1,4 @@
-package set
+package hashset
 
 import (
 	"fmt"
@@ -7,14 +7,19 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestHashSet(t *testing.T) {
-	assert.Empty(t, HashSet().hashMap)
-	assert.Contains(t, HashSet(1).hashMap, 1)
-	assert.Len(t, HashSet(1, 2, 3).hashMap, 3)
+func TestHashSetNew(t *testing.T) {
+	assert.Empty(t, New().hashMap)
+}
+
+func TestHashSetFrom(t *testing.T) {
+	assert.Contains(t, From(1).hashMap, 1)
+	assert.Len(t, From(1, 2, 3).hashMap, 3)
+	s := []interface{}{1, 2, 3}
+	assert.Len(t, FromSlice(s).hashMap, 3)
 }
 
 func TestHashSetAdd(t *testing.T) {
-	set := HashSet()
+	set := New()
 	assert.True(t, set.Add(1))
 	assert.Equal(t, 1, set.Len())
 	assert.True(t, set.Contains(1))
@@ -22,7 +27,7 @@ func TestHashSetAdd(t *testing.T) {
 }
 
 func TestHashSetAddCantDuplicate(t *testing.T) {
-	set := HashSet()
+	set := New()
 	set.Add(999)
 	inserted := set.Add(999)
 	assert.False(t, inserted)
@@ -30,7 +35,7 @@ func TestHashSetAddCantDuplicate(t *testing.T) {
 }
 
 func TestHashSetString(t *testing.T) {
-	set := HashSet()
+	set := New()
 	assert.Equal(t, "Set{}", fmt.Sprint(set.String()))
 	set.Add(1)
 	assert.Equal(t, "Set{1}", fmt.Sprint(set.String()))
@@ -44,7 +49,7 @@ func TestHashSetString(t *testing.T) {
 }
 
 func TestHashSetCollect(t *testing.T) {
-	set := HashSet()
+	set := New()
 	assert.Equal(t, 0, set.Len())
 	set.Add(1)
 	set.Add(2)
@@ -55,14 +60,14 @@ func TestHashSetCollect(t *testing.T) {
 }
 
 func TestHashSetContains(t *testing.T) {
-	set := HashSet()
+	set := New()
 	set.Add(1)
 	assert.True(t, set.Contains(1))
 	assert.False(t, set.Contains(2))
 }
 
 func TestHashSetRemove(t *testing.T) {
-	set := HashSet()
+	set := New()
 	set.Add(1)
 	assert.False(t, set.Remove(999))
 	assert.True(t, set.Remove(1))
@@ -70,7 +75,7 @@ func TestHashSetRemove(t *testing.T) {
 }
 
 func TestHashSetContainsAll(t *testing.T) {
-	set := HashSet()
+	set := New()
 	set.Add(1)
 	set.Add(2)
 	set.Add(3)
@@ -81,7 +86,7 @@ func TestHashSetContainsAll(t *testing.T) {
 }
 
 func TestHashSetLen(t *testing.T) {
-	set := HashSet()
+	set := New()
 	set.Add(1)
 	assert.Equal(t, 1, set.Len())
 	set.Add(1)
