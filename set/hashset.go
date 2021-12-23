@@ -45,7 +45,7 @@ func (s hashSet) String() string {
 	return sb.String()
 }
 
-func (s hashSet) Collect() []interface{} {
+func (s hashSet) ToSlice() []interface{} {
 	result := make([]interface{}, len(s.hashMap))
 	index := 0
 	for item := range s.hashMap {

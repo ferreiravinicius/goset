@@ -49,7 +49,7 @@ func TestHashSetCollect(t *testing.T) {
 	set.Add(1)
 	set.Add(2)
 	set.Add(3)
-	collected := set.Collect()
+	collected := set.ToSlice()
 	assert.Len(t, collected, 3)
 	assert.Contains(t, collected, 1)
 }
