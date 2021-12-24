@@ -91,9 +91,11 @@ func (s HashSet) Contains(item interface{}) bool {
 // Removes the provided item from this set if it exists - O(1).
 // Returns true if removed or false otherwise.
 func (s HashSet) Remove(item interface{}) bool {
-	beforeSize := len(s.hashMap)
-	delete(s.hashMap, item)
-	return beforeSize > len(s.hashMap)
+	if _, exists := s.hashMap[item]; exists {
+		delete(s.hashMap, item)
+		return true
+	}
+	return false
 }
 
 // Returns true if all provided items exists in this set.
