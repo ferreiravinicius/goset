@@ -95,7 +95,7 @@ func TestHashSetLen(t *testing.T) {
 	assert.Equal(t, 2, set.Len())
 }
 
-func TestForEach(t *testing.T) {
+func TestHashSetForEach(t *testing.T) {
 	set := From(1, 2, 3)
 	r := make([]int, 0, 3)
 

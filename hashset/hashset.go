@@ -19,7 +19,11 @@ type HashSet struct {
 }
 
 // Creates a new HashSet instance
-func New() *HashSet {
+func New(initialSize ...int) *HashSet {
+	if len(initialSize) == 1 {
+		size := initialSize[0]
+		return &HashSet{hashMap: make(map[interface{}]struct{}, size)}
+	}
 	return &HashSet{hashMap: make(map[interface{}]struct{})}
 }
 
@@ -32,7 +36,7 @@ func New() *HashSet {
 //
 // s := hashset.From([]int{1, 2, 3}) // wrong
 func From(items ...interface{}) *HashSet {
-	s := New()
+	s := New(len(items))
 	for _, item := range items {
 		s.Add(item)
 	}
@@ -44,11 +48,9 @@ func From(items ...interface{}) *HashSet {
 //
 // Order of insertion is NOT guaranteed.
 func (s HashSet) Add(item interface{}) bool {
-	if _, exists := s.hashMap[item]; exists {
-		return false
-	}
+	beforeSize := len(s.hashMap)
 	s.hashMap[item] = struct{}{}
-	return true
+	return beforeSize < len(s.hashMap)
 }
 
 // Returns a representation of this set as a string in the for `Set{1, 2, 3}` - O(n).
@@ -91,8 +93,7 @@ func (s HashSet) Contains(item interface{}) bool {
 func (s HashSet) Remove(item interface{}) bool {
 	beforeSize := len(s.hashMap)
 	delete(s.hashMap, item)
-	afterSize := len(s.hashMap)
-	return beforeSize > afterSize
+	return beforeSize > len(s.hashMap)
 }
 
 // Returns true if all provided items exists in this set.
